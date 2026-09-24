@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import imagem from '../../assets/img/home-dashboard-monitor.jpg';
+
+// Itens da tela inicial do ERP (resources/views/home.blade.php).
+const itens = [
+  'Dashboard gerencial',
+  'Vendas do dia',
+  'Vendas dos últimos 30 dias',
+  'Contas a receber',
+  'Contas a pagar',
+  'Alertas',
+  'Estoque baixo',
+  'Produtos mais vendidos',
+  'Atalhos para PDV e caixa',
+];
+---
+
+<section class="bg-gradiente-roxo py-16 text-white xl:py-20">
+  <div class="container-site grid items-center gap-10 lg:grid-cols-2 xl:gap-24">
+    <Image
+      src={imagem}
+      alt="Monitor exibindo o dashboard do Diprosoft One com vendas, cupons emitidos e produtos mais vendidos"
+      widths={[640, 960, imagem.width]}
+      sizes="(min-width: 1024px) 45vw, 100vw"
+      class="aspect-[3/2] w-full rounded-3xl object-cover shadow-2xl"
+    />
+    <div>
+      <p class="text-sm font-semibold tracking-wide text-laranja-500 uppercase xl:text-base">Principal</p>
+      <h2 class="mt-2 text-3xl leading-tight font-bold md:text-4xl xl:text-[3.5rem]">
+        Tenha o controle completo do seu negócio na palma da sua mão
+      </h2>
+      <p class="mt-6 font-bold md:text-lg xl:text-xl">
+        O dashboard gerencial de que você precisa para tomar decisões rápidas e aumentar seus resultados.
+      </p>
+      <ul class="mt-6 grid gap-x-6 gap-y-1 sm:grid-cols-3 md:text-lg">
+        {
+          itens.map((item) => (
+            <li class="flex gap-2">
+              <span aria-hidden="true">•</span>
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+      <hr class="my-8 border-white/40" />
+      <h3 class="text-2xl font-bold text-laranja-500 xl:text-[2.25rem]">Veja o dashboard em ação</h3>
+      <p class="mt-4 leading-relaxed md:text-lg">
+        Assim que entra no sistema, você vê as vendas de hoje, o que tem a receber e a pagar nos próximos 7 dias, a
+        evolução das vendas no último mês e os alertas pendentes. Dali mesmo, abre o caixa, lança uma venda ou cadastra
+        um cliente com um clique.
+      </p>
+    </div>
+  </div>
+</section>

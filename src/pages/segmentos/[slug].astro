@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Hero from '../../components/Hero.astro';
+import ChamadaParceria from '../../components/segmento/ChamadaParceria.astro';
+import Produto from '../../components/segmento/Produto.astro';
+import Solucoes from '../../components/segmento/Solucoes.astro';
+import Button from '../../components/ui/Button.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import iconeTestar from '../../assets/img/icon-clipboard.png';
+import { ctas } from '../../config/site';
+import { segmentosDisponiveis } from '../../data/segmentos';
+
+export const getStaticPaths = (() =>
+  segmentosDisponiveis.map((segmento) => ({
+    params: { slug: segmento.slug },
+    props: { pagina: segmento.pagina },
+  }))) satisfies GetStaticPaths;
+
+const { pagina } = Astro.props;
+---
+
+<BaseLayout titulo={pagina.titulo} descricao={pagina.produtoTexto}>
+  <Hero titulo={pagina.heroTitulo} imagem={pagina.heroImagem} posicao={pagina.heroPosicao}>
+    <Button href={ctas.testarSistema} tamanho="lg" class="w-full sm:w-auto">
+      <Image src={iconeTestar} alt="" width={44} class="h-9 w-auto" />
+      {pagina.ctaTestar}
+    </Button>
+  </Hero>
+  <Produto pagina={pagina} />
+  <Solucoes pagina={pagina} />
+  <ChamadaParceria titulo={pagina.ctaTitulo} />
+</BaseLayout>

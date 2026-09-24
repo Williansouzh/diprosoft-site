@@ -1,0 +1,17 @@
+---
+import LoginMock from '../components/LoginMock.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import imagem from '../assets/img/login-contador.jpg';
+---
+
+<BaseLayout titulo="Portal do Contador" mostrarAbaContador={false}>
+  <meta slot="head" name="robots" content="noindex" />
+  <LoginMock
+    boasVindas="Olá, bem-vindo ao"
+    destaque="Portal do Contador"
+    titulo="Portal do Contador"
+    subtitulo="Simples, intuitivo e fácil de usar!"
+    campoUsuario={{ rotulo: 'Email', tipo: 'email', autocomplete: 'email' }}
+    imagem={imagem}
+  />
+</BaseLayout>

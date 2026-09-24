@@ -1,0 +1,29 @@
+---
+import BrandIcon from '../components/ui/BrandIcon.astro';
+import Button from '../components/ui/Button.astro';
+import Hero from '../components/Hero.astro';
+import Cases from '../components/home/Cases.astro';
+import Dashboard from '../components/home/Dashboard.astro';
+import Diferenciais from '../components/home/Diferenciais.astro';
+import Funcionalidades from '../components/home/Funcionalidades.astro';
+import Segmentos from '../components/home/Segmentos.astro';
+import Sobre from '../components/home/Sobre.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import heroImagem from '../assets/img/home-hero.jpg';
+import { ctas } from '../config/site';
+---
+
+<BaseLayout>
+  <Hero titulo={'Diprosoft One –\nSeu ERP com PDV\nintegrado'} imagem={heroImagem} posicao="70% 40%">
+    <Button href={ctas.whatsapp} tamanho="lg" class="w-full sm:w-auto">
+      <BrandIcon nome="whatsapp" class="size-7" />
+      Clique aqui e fale conosco
+    </Button>
+  </Hero>
+  <Sobre />
+  <Segmentos />
+  <Dashboard />
+  <Funcionalidades />
+  <Diferenciais />
+  <Cases />
+</BaseLayout>

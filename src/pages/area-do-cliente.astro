@@ -1,0 +1,17 @@
+---
+import LoginMock from '../components/LoginMock.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import imagem from '../assets/img/login-cliente.jpg';
+---
+
+<BaseLayout titulo="Área do Cliente" acesso="contador">
+  <meta slot="head" name="robots" content="noindex" />
+  <LoginMock
+    boasVindas="Olá, seja bem-vindo(a) à sua"
+    destaque="Área do Cliente"
+    titulo="Área do Cliente"
+    subtitulo="Acesse agora mesmo"
+    campoUsuario={{ rotulo: 'Usuário', tipo: 'text', autocomplete: 'username' }}
+    imagem={imagem}
+  />
+</BaseLayout>

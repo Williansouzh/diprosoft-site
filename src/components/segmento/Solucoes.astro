@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import BrandIcon from '../ui/BrandIcon.astro';
+import mockup from '../../assets/img/mockup-celular.jpg';
+import type { PaginaSegmento } from '../../data/segmentos';
+
+interface Props {
+  pagina: PaginaSegmento;
+}
+
+const { pagina } = Astro.props;
+---
+
+<section class="bg-gradiente-roxo py-16 text-white xl:py-20">
+  <div class="container-site">
+    <div class="mx-auto max-w-5xl text-center">
+      <h2 class="text-3xl leading-tight md:text-4xl xl:text-5xl">
+        Soluções completas para você
+        <strong class="block font-bold">comandar seu negócio com eficiência</strong>
+      </h2>
+      <p class="mt-5 md:text-lg xl:text-xl">
+        Cada funcionalidade foi pensada para resolver os principais desafios da gestão {pagina.publico}.
+      </p>
+    </div>
+
+    <div class="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14 xl:mt-14">
+      <ul class="space-y-6 xl:space-y-7">
+        {
+          pagina.funcionalidades.map((f) => (
+            <li class="flex items-center gap-4 rounded-md bg-cinza-100 p-4 shadow-lg shadow-black/25 xl:gap-5 xl:px-5 xl:py-5">
+              <span class="grid size-14 shrink-0 place-items-center rounded-full bg-roxo text-white xl:size-[4.5rem]">
+                {f.icone === 'whatsapp' ? (
+                  <BrandIcon nome="whatsapp" class="size-7 xl:size-9" />
+                ) : (
+                  <f.icone class="size-7 xl:size-9" stroke-width={1.5} aria-hidden="true" />
+                )}
+              </span>
+              <div>
+                <h3 class="text-lg leading-tight font-bold text-roxo xl:text-2xl">{f.titulo}</h3>
+                {f.texto && <p class="mt-1 text-sm leading-snug text-texto xl:text-lg">{f.texto}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Mockups provisórios: o design repete a mesma imagem nos quatro celulares. -->
+      <ul class="grid grid-cols-2 gap-4 xl:gap-8" aria-label="Telas do aplicativo (em breve)">
+        {
+          Array.from({ length: 4 }, () => (
+            <li>
+              <Image
+                src={mockup}
+                alt=""
+                widths={[240, 400]}
+                sizes="(min-width: 1024px) 22vw, 45vw"
+                class="aspect-[390/751] w-full object-cover"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

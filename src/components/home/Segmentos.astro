@@ -1,0 +1,64 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import Carrossel from '../ui/Carrossel.astro';
+import { rotas } from '../../config/site';
+import { segmentos } from '../../data/segmentos';
+---
+
+<section id="segmentos" class="bg-cinza-200 py-16 xl:py-20">
+  <div class="container-site">
+    <h2 class="text-center text-3xl leading-tight text-balance text-roxo md:text-4xl xl:text-5xl">
+      Encontre aqui o seu segmento e descubra
+      <strong class="block font-bold">o que a Diprosoft pode fazer pelo seu negócio.</strong>
+    </h2>
+
+    <div class="mt-12 xl:mt-14">
+      <Carrossel rotulo="Segmentos atendidos">
+        {
+          segmentos.map((s) => {
+            const slugDestino = s.pagina ? s.slug : s.destino;
+            const Tag = slugDestino ? 'a' : 'div';
+            return (
+              <li class="w-[78%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-3rem)/3)] xl:w-[calc((100%-6rem)/5)]">
+                <Tag
+                  href={slugDestino ? rotas.segmento(slugDestino) : undefined}
+                  class:list={[
+                    'group relative isolate flex aspect-[320/430] flex-col justify-end overflow-hidden rounded-2xl bg-noite p-4 text-white shadow-lg',
+                    slugDestino && 'transition hover:-translate-y-1 hover:shadow-2xl',
+                  ]}
+                >
+                  <Image
+                    src={s.card.imagem}
+                    alt=""
+                    widths={[400, 640]}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 768px) 33vw, 80vw"
+                    class="absolute inset-0 -z-10 size-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    class="absolute inset-0 -z-10 bg-gradient-to-t from-noite via-noite/80 via-30% to-transparent to-60%"
+                    aria-hidden="true"
+                  />
+                  {!slugDestino && (
+                    <span class="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-roxo">
+                      Em breve
+                    </span>
+                  )}
+                  <div class="border-t border-white/60 pt-3">
+                    <h3 class="flex items-center justify-between gap-2 text-xl font-bold text-laranja-500">
+                      {s.card.titulo}
+                      {slugDestino && (
+                        <ArrowRight class="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
+                      )}
+                    </h3>
+                    <p class="mt-1 text-sm leading-snug">{s.card.texto}</p>
+                  </div>
+                </Tag>
+              </li>
+            );
+          })
+        }
+      </Carrossel>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+---
+import logoBranco from '../../assets/logos/diprosoft-one-branco.svg';
+import logoRoxo from '../../assets/logos/diprosoft-one.svg';
+
+interface Props {
+  variante?: 'branco' | 'roxo';
+  class?: string;
+}
+
+const { variante = 'branco', class: className } = Astro.props;
+const logo = variante === 'branco' ? logoBranco : logoRoxo;
+---
+
+<img src={logo.src} width={logo.width} height={logo.height} alt="DiProSoft One" class={className} />

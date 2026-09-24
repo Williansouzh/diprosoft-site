@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import Logo from '../ui/Logo.astro';
+import imagem from '../../assets/img/home-franqueado.jpg';
+import iconeChat from '../../assets/img/icon-chat.png';
+import iconeFoguete from '../../assets/img/icon-rocket.png';
+import { ctas } from '../../config/site';
+---
+
+<section id="sobre" class="bg-cinza-100 py-16 xl:py-20">
+  <div class="container-site grid items-center gap-10 lg:grid-cols-2 xl:gap-16">
+    <div>
+      <Logo variante="roxo" class="h-10 w-auto" />
+      <h2 class="mt-5 text-4xl leading-tight font-black text-roxo md:text-5xl xl:text-[3.5rem]">
+        Seja um Franqueado Diprosoft One
+      </h2>
+      <p class="mt-6 text-base leading-relaxed md:text-lg xl:text-xl">
+        A Diprosoft One oferece soluções completas em tecnologia, gestão e automação comercial, desenvolvidas para
+        simplificar processos, aumentar a produtividade e gerar resultados reais para sua empresa.
+      </p>
+      <p class="mt-6 text-2xl leading-snug font-bold text-laranja-500 xl:text-[2.25rem]">
+        Mais controle, mais eficiência e mais lucro com um sistema inteligente e integrado.
+      </p>
+      <p class="mt-6 text-base leading-relaxed md:text-lg xl:text-xl">
+        Sistema ERP com PDV integrado ideal para pet shops, auto centers, oficinas, clínicas veterinárias, vestuário,
+        mercadinhos, padarias, açougues e todo o varejo. Tenha controle total da sua empresa com tecnologia moderna,
+        simples e eficiente.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <Button href={ctas.solicitarDemonstracao}>
+          <Image src={iconeFoguete} alt="" width={28} class="h-7 w-auto" />
+          Solicitar Demonstração
+        </Button>
+        <Button href={ctas.falarComConsultor} variante="roxo">
+          <Image src={iconeChat} alt="" width={28} class="h-6 w-auto" />
+          Falar com Consultor
+        </Button>
+      </div>
+    </div>
+    <Image
+      src={imagem}
+      alt="Mãos usando um tablet com ícones de gestão conectados: vendas, clientes, pagamentos e relatórios"
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      class="aspect-[784/715] w-full rounded-[2rem] object-cover"
+    />
+  </div>
+</section>

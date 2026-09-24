@@ -1,0 +1,29 @@
+---
+import { Globe, Headset, RefreshCcwDot, ShieldCheck } from '@lucide/astro';
+
+const diferenciais = [
+  { titulo: 'Suporte especializado', texto: 'Sempre que você precisar', icone: Headset },
+  { titulo: 'Sistema 100% online', texto: 'Acesse de qualquer lugar', icone: Globe },
+  { titulo: 'Segurança de dados', texto: 'Seus dados sempre protegidos', icone: ShieldCheck },
+  { titulo: 'Atualizações constantes', texto: 'Sempre com as novidades', icone: RefreshCcwDot },
+];
+---
+
+<section id="diferenciais" class="bg-cinza-200 pb-14 xl:pb-16">
+  <h2 class="sr-only">Diferenciais</h2>
+  <ul class="container-site grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+    {
+      diferenciais.map((d) => (
+        <li class="flex items-center gap-4">
+          <span class="grid size-16 shrink-0 place-items-center rounded-full border-2 border-laranja-500 text-laranja-500 xl:size-[4.5rem]">
+            <d.icone class="size-8 xl:size-9" stroke-width={1.5} aria-hidden="true" />
+          </span>
+          <p class="text-roxo md:text-lg xl:text-xl">
+            <strong class="block font-bold">{d.titulo}</strong>
+            {d.texto}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

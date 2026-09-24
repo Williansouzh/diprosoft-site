@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { isPendente } from '../../config/site';
+
+type Variante = 'laranja' | 'roxo' | 'whatsapp';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  variante?: Variante;
+  tamanho?: 'sm' | 'md' | 'lg';
+};
+
+const { href, variante = 'laranja', tamanho = 'md', class: className, ...rest } = Astro.props;
+
+const variantes: Record<Variante, string> = {
+  laranja: 'bg-gradiente-laranja text-white hover:brightness-110',
+  roxo: 'bg-roxo-escuro text-white hover:bg-roxo',
+  whatsapp: 'bg-whatsapp text-white hover:brightness-110',
+};
+
+const tamanhos = {
+  sm: 'min-h-10 px-4 text-sm gap-2 rounded-md',
+  md: 'min-h-12 px-6 text-base gap-3 rounded-md',
+  lg: 'min-h-14 px-8 text-lg md:text-2xl gap-3 rounded-lg',
+};
+---
+
+<a
+  href={href}
+  data-pendente={isPendente(href) ? '' : undefined}
+  class:list={[
+    'inline-flex items-center justify-center font-bold shadow-md transition',
+    variantes[variante],
+    tamanhos[tamanho],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</a>

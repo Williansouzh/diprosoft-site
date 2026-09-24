@@ -1,0 +1,157 @@
+---
+import { Boxes, Calculator, ChartColumn, Check, ReceiptText, Settings, Store, Users } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import iconeChat from '../../assets/img/icon-chat.png';
+import iconeFoguete from '../../assets/img/icon-rocket.png';
+import imagemIntegrado from '../../assets/img/home-sistema-integrado.jpg';
+import ondas from '../../assets/img/home-waves.jpg';
+import { ctas } from '../../config/site';
+
+const modulos = [
+  {
+    titulo: ['PDV', 'Frente de Caixa'],
+    icone: Store,
+    itens: [
+      'Nova venda',
+      'Leitor de código de barras',
+      'TEF / PIX / Cartão / Dinheiro',
+      'Sangria / Suprimento',
+      'Troca / Devolução',
+      'Fechamento de caixa',
+      'Contingência offline (NFC-e)',
+    ],
+  },
+  {
+    titulo: ['Estoque'],
+    icone: Boxes,
+    itens: [
+      'Cadastro de produtos',
+      'Grade cor/tamanho',
+      'Entrada de mercadoria',
+      'Inventário',
+      'Transferência',
+      'Promoções / validade',
+      'Etiquetas',
+    ],
+  },
+  {
+    titulo: ['Clientes'],
+    icone: Users,
+    itens: ['Cadastro de clientes', 'Crediário', 'Limite de compra', 'Histórico de vendas', 'Cobrança via WhatsApp'],
+  },
+  {
+    titulo: ['Financeiro'],
+    icone: Calculator,
+    itens: ['Contas a pagar', 'Contas a receber', 'Fluxo de caixa', 'Conciliação', 'Boletos', 'Plano de contas', 'Crediário'],
+  },
+  {
+    titulo: ['Fiscal'],
+    icone: ReceiptText,
+    itens: ['NFC-e', 'NF-e', 'NFS-e', 'CT-e e MDF-e', 'SPED Fiscal e Sintegra', 'Cancelamentos', 'Carta de correção'],
+  },
+  {
+    titulo: ['Relatórios'],
+    icone: ChartColumn,
+    itens: [
+      'Vendas por período',
+      'Produtos mais vendidos',
+      'Lucro',
+      'Ticket médio',
+      'Comissão de vendedores',
+      'Curva ABC de clientes',
+    ],
+  },
+  {
+    titulo: ['Configurações'],
+    icone: Settings,
+    itens: ['Usuários', 'Permissões', 'Impressoras', 'Backup', 'Integrações', 'Balanças', 'Etiquetas', 'TEF'],
+  },
+];
+---
+
+<section id="funcionalidades" class="bg-cinza-200 py-16 xl:py-20">
+  <div class="container-site">
+    <p class="text-sm font-semibold tracking-wide text-laranja-500 uppercase xl:text-base">Funcionalidades</p>
+    <h2 class="mt-2 text-3xl leading-tight font-black text-roxo md:text-4xl xl:text-[3.5rem]">
+      Tudo o que você precisa em um só sistema
+    </h2>
+
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2 xl:mt-12 xl:grid-cols-4 xl:gap-8">
+      {
+        modulos.map((m) => (
+          <li class="bg-gradiente-card relative isolate overflow-hidden rounded-3xl p-7 text-white shadow-lg xl:min-h-[31rem] xl:p-8">
+            <Image
+              src={ondas}
+              alt=""
+              widths={[640]}
+              sizes="400px"
+              class="absolute inset-0 -z-10 size-full object-cover opacity-15 mix-blend-soft-light"
+            />
+            <h3 class="flex items-center gap-4 text-2xl leading-tight font-bold text-laranja-500 xl:text-[1.75rem]">
+              <m.icone class="size-12 shrink-0 text-white" stroke-width={1.25} aria-hidden="true" />
+              <span>
+                {m.titulo.map((linha, i) => (
+                  <>
+                    {i > 0 && <br />}
+                    {linha}
+                  </>
+                ))}
+              </span>
+            </h3>
+            <ul class="mt-6 space-y-2 md:text-lg xl:text-xl">
+              {m.itens.map((item) => (
+                <li class="flex gap-2">
+                  <span class="text-laranja-500" aria-hidden="true">
+                    •
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+      <li class="flex flex-col overflow-hidden rounded-3xl bg-noite text-white shadow-lg">
+        <Image
+          src={imagemIntegrado}
+          alt="Dashboard do Diprosoft One exibido em um monitor e em um celular"
+          widths={[480, 800]}
+          sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+          class="aspect-[4/3] w-full object-cover"
+        />
+        <div class="flex flex-1 flex-col p-6 pt-2">
+          <h3 class="text-2xl font-bold xl:text-[1.75rem]">Sistema 100% integrado</h3>
+          <p class="mt-1 text-sm">Todas as informações do seu negócio conectadas em tempo real.</p>
+          <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+            {
+              ['Fácil de usar', 'Seguro e confiável', 'Suporte especializado'].map((t) => (
+                <li class="flex items-center gap-1">
+                  <Check class="size-4 text-laranja-500" aria-hidden="true" />
+                  {t}
+                </li>
+              ))
+            }
+          </ul>
+          <Button href={ctas.falarComEspecialista} class="mt-5 uppercase xl:mt-auto">
+            <Image src={iconeChat} alt="" width={28} class="h-6 w-auto" />
+            Falar com especialista
+          </Button>
+        </div>
+      </li>
+    </ul>
+
+    <div
+      class="bg-gradiente-laranja relative mt-10 flex flex-col items-center gap-6 rounded-3xl px-6 py-10 text-center text-white md:flex-row md:px-10 md:text-left xl:mt-12 xl:px-16 xl:py-12"
+    >
+      <Image src={iconeFoguete} alt="" width={140} class="h-28 w-auto md:h-36 xl:ml-8 xl:h-44" />
+      <h2 class="flex-1 text-3xl leading-tight font-bold md:text-4xl xl:pl-16 xl:text-[3.5rem]">
+        Pronto para transformar a gestão do seu negócio?
+      </h2>
+      <Button href={ctas.solicitarDemonstracao} variante="roxo" tamanho="lg" class="shrink-0 md:text-lg xl:text-xl">
+        <Image src={iconeFoguete} alt="" width={28} class="h-8 w-auto" />
+        Solicitar Demonstração
+      </Button>
+    </div>
+  </div>
+</section>

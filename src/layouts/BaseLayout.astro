@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import ContadorTab from '../components/ContadorTab.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { site, url } from '../config/site';
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  mostrarAbaContador?: boolean;
+  acesso?: 'cliente' | 'contador';
+}
+
+const { titulo, descricao = site.descricao, mostrarAbaContador = true, acesso } = Astro.props;
+const tituloCompleto = titulo ? `${titulo} | ${site.nome}` : `${site.nome} — Seu ERP com PDV integrado`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#682480" />
+    <slot name="head" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a
+      href="#conteudo"
+      class="sr-only z-50 rounded bg-white px-4 py-2 text-roxo focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+    >
+      Pular para o conteúdo
+    </a>
+    <Header acesso={acesso} />
+    {mostrarAbaContador && <ContadorTab />}
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

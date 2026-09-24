@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import iconeTestar from '../../assets/img/icon-clipboard.png';
+import { ctas } from '../../config/site';
+import type { PaginaSegmento } from '../../data/segmentos';
+
+interface Props {
+  pagina: PaginaSegmento;
+}
+
+const { pagina } = Astro.props;
+const duasColunas = pagina.itens.length > 4;
+---
+
+<section class="overflow-hidden bg-cinza-100 py-16 xl:py-20">
+  <div class="container-site grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-0">
+    <Image
+      src={pagina.produtoImagem}
+      alt={pagina.produtoImagemAlt}
+      widths={[640, 960, 1280]}
+      sizes="(min-width: 1024px) 45vw, 100vw"
+      class="relative z-10 aspect-[764/702] w-full rounded-[2rem] object-cover shadow-lg"
+    />
+    <div class="lg:pl-0">
+      <div class="lg:pl-[12%]">
+        <Image src={pagina.logo} alt={pagina.logoAlt} class="h-16 w-auto xl:h-[5.5rem]" />
+        <h2 class="mt-4 text-3xl leading-tight font-bold text-roxo md:text-4xl md:whitespace-pre-line xl:text-5xl">
+          {pagina.produtoTitulo}
+        </h2>
+      </div>
+      <div
+        class="relative mt-6 py-6 text-white before:absolute before:inset-y-0 before:-right-[100vw] before:-left-[100vw] before:-z-0 before:bg-roxo lg:before:-left-[50vw]"
+      >
+        <ul
+          class:list={[
+            'relative grid gap-x-10 gap-y-1 text-base md:text-lg xl:text-xl lg:pl-[12%]',
+            duasColunas && 'sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-3',
+          ]}
+        >
+          {
+            pagina.itens.map((item) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true">•</span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="lg:pl-[12%]">
+        <p class="mt-6 max-w-xl text-base leading-relaxed md:text-lg xl:text-xl">{pagina.produtoTexto}</p>
+        <Button href={ctas.testarSistema} class="mt-10 md:text-lg xl:text-xl">
+          <Image src={iconeTestar} alt="" width={40} class="h-9 w-auto" />
+          {pagina.ctaTestar}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

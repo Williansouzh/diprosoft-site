@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Arquivos-fonte de design (1,6 GB, arquivos acima do limite do GitHub)
+files de design/

@@ -1,0 +1,13 @@
+---
+import { Image } from 'astro:assets';
+import iconePessoas from '../assets/img/icon-people.png';
+import { rotas } from '../config/site';
+---
+
+<a
+  href={rotas.portalDoContador}
+  class="bg-gradiente-laranja fixed top-1/3 right-0 z-30 hidden w-18 flex-col items-center gap-1 rounded-l-lg px-2 py-2 text-center text-[0.7rem] leading-tight font-bold text-white shadow-lg transition hover:w-20 md:flex"
+>
+  <Image src={iconePessoas} alt="" width={48} class="h-9 w-auto" />
+  Área do Contador
+</a>

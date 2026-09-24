@@ -1,0 +1,188 @@
+---
+import { ChevronDown, Menu, Search, X } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import Logo from './ui/Logo.astro';
+import iconePessoas from '../assets/img/icon-people.png';
+import { menu, rotas, url } from '../config/site';
+import { segmentosDisponiveis } from '../data/segmentos';
+
+interface Props {
+  /** Botão de acesso exibido no canto direito (o design alterna nas páginas de login). */
+  acesso?: 'cliente' | 'contador';
+}
+
+const { acesso = 'cliente' } = Astro.props;
+const botaoAcesso =
+  acesso === 'cliente'
+    ? { rotulo: 'Área do Cliente', href: rotas.areaDoCliente }
+    : { rotulo: 'Área do Contador', href: rotas.portalDoContador };
+---
+
+<header class="sticky top-0 z-40 bg-roxo text-white shadow-lg shadow-black/10">
+  <div class="container-site flex h-18 items-center justify-between gap-6 xl:h-[5.8rem]">
+    <a href={rotas.home} class="shrink-0" aria-label="Diprosoft One — página inicial">
+      <Logo class="h-9 w-auto xl:h-14" />
+    </a>
+
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex items-center text-base xl:text-lg">
+        {
+          menu.map((item, i) => (
+            <li class="flex items-center">
+              {i > 0 && <span class="px-2 text-white/80 xl:px-3" aria-hidden="true">|</span>}
+              {'submenu' in item ? (
+                <div class="group relative" data-dropdown>
+                  <button
+                    type="button"
+                    class="flex items-center gap-1 py-2 hover:text-laranja-300"
+                    aria-expanded="false"
+                    aria-controls="submenu-solucoes"
+                    data-dropdown-botao
+                  >
+                    {item.rotulo}
+                    <ChevronDown class="size-4 transition group-hover:rotate-180" aria-hidden="true" />
+                  </button>
+                  <ul
+                    id="submenu-solucoes"
+                    class="invisible absolute top-full left-1/2 grid w-[34rem] -translate-x-1/2 grid-cols-2 rounded-lg bg-white p-2 text-roxo opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 data-[aberto]:visible data-[aberto]:opacity-100"
+                    data-dropdown-lista
+                  >
+                    {segmentosDisponiveis.map((s) => (
+                      <li>
+                        <a
+                          href={rotas.segmento(s.slug)}
+                          class="block rounded-md px-4 py-2.5 font-semibold hover:bg-cinza-100"
+                        >
+                          {s.nome}
+                        </a>
+                      </li>
+                    ))}
+                    <li class="col-span-2 mt-1 border-t border-cinza-200 pt-1">
+                      <a href={url('/#segmentos')} class="block rounded-md px-4 py-2.5 text-sm hover:bg-cinza-100">
+                        Ver todos os segmentos
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <a href={item.href} class="py-2 hover:text-laranja-300">
+                  {item.rotulo}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3 xl:gap-5">
+      <!-- TODO: busca sem página de resultados definida no design. -->
+      <button type="button" class="hidden p-2 hover:text-laranja-300 sm:block" aria-label="Buscar" data-pendente>
+        <Search class="size-7" aria-hidden="true" />
+      </button>
+      <a
+        href={botaoAcesso.href}
+        class="bg-gradiente-laranja hidden items-center gap-2 rounded-md py-2 pr-5 pl-3 font-bold shadow-md hover:brightness-110 sm:flex xl:min-h-14 xl:text-lg"
+      >
+        <Image src={iconePessoas} alt="" width={40} class="h-8 w-auto xl:h-10" />
+        {botaoAcesso.rotulo}
+      </a>
+      <button
+        type="button"
+        class="p-2 lg:hidden"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+        data-menu-botao
+      >
+        <Menu class="size-7" aria-hidden="true" data-icone-abrir />
+        <X class="hidden size-7" aria-hidden="true" data-icone-fechar />
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="menu-mobile"
+    aria-label="Menu principal"
+    class="hidden max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/15 bg-roxo lg:hidden"
+    data-menu
+  >
+    <ul class="container-site flex flex-col py-4 text-lg">
+      {
+        menu.map((item) => (
+          <li>
+            <a href={item.href} class="block py-3 font-semibold">
+              {item.rotulo}
+            </a>
+            {'submenu' in item && (
+              <ul class="mb-2 border-l-2 border-laranja-500 pl-4">
+                {segmentosDisponiveis.map((s) => (
+                  <li>
+                    <a href={rotas.segmento(s.slug)} class="block py-2 text-base text-white/90">
+                      {s.nome}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+      <li class="mt-4 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={rotas.areaDoCliente}
+          class="bg-gradiente-laranja flex items-center justify-center gap-2 rounded-md px-5 py-3 font-bold"
+        >
+          Área do Cliente
+        </a>
+        <a
+          href={rotas.portalDoContador}
+          class="flex items-center justify-center gap-2 rounded-md border border-white/40 px-5 py-3 font-bold"
+        >
+          Área do Contador
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const botao = document.querySelector<HTMLButtonElement>('[data-menu-botao]');
+  const painel = document.querySelector<HTMLElement>('[data-menu]');
+
+  botao?.addEventListener('click', () => {
+    const aberto = botao.getAttribute('aria-expanded') === 'true';
+    botao.setAttribute('aria-expanded', String(!aberto));
+    botao.setAttribute('aria-label', aberto ? 'Abrir menu' : 'Fechar menu');
+    painel?.classList.toggle('hidden', aberto);
+    botao.querySelector('[data-icone-abrir]')?.classList.toggle('hidden', !aberto);
+    botao.querySelector('[data-icone-fechar]')?.classList.toggle('hidden', aberto);
+  });
+
+  painel?.querySelectorAll('a').forEach((link) =>
+    link.addEventListener('click', () => {
+      if (botao?.getAttribute('aria-expanded') === 'true') botao.click();
+    }),
+  );
+
+  document.querySelectorAll<HTMLElement>('[data-dropdown]').forEach((dropdown) => {
+    const botaoDropdown = dropdown.querySelector<HTMLButtonElement>('[data-dropdown-botao]');
+    const lista = dropdown.querySelector<HTMLElement>('[data-dropdown-lista]');
+    const definir = (aberto: boolean) => {
+      botaoDropdown?.setAttribute('aria-expanded', String(aberto));
+      lista?.toggleAttribute('data-aberto', aberto);
+    };
+    botaoDropdown?.addEventListener('click', () =>
+      definir(botaoDropdown.getAttribute('aria-expanded') !== 'true'),
+    );
+    dropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        definir(false);
+        botaoDropdown?.focus();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target as Node)) definir(false);
+    });
+  });
+</script>

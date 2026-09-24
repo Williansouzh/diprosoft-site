@@ -1,0 +1,131 @@
+---
+import BrandIcon from './ui/BrandIcon.astro';
+import Button from './ui/Button.astro';
+import Logo from './ui/Logo.astro';
+import { ctas, isPendente, linksLegais, menu, site } from '../config/site';
+
+const sociais = [
+  { nome: 'facebook', rotulo: 'Facebook', href: site.sociais.facebook },
+  { nome: 'instagram', rotulo: 'Instagram', href: site.sociais.instagram },
+  { nome: 'x', rotulo: 'X (Twitter)', href: site.sociais.x },
+  { nome: 'youtube', rotulo: 'YouTube', href: site.sociais.youtube },
+] as const;
+---
+
+<footer class="bg-gradiente-roxo text-white">
+  <div class="container-site grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,0.8fr)_minmax(0,1.1fr)] lg:gap-8 xl:py-16">
+    <div>
+      <Logo class="h-11 w-auto xl:h-14" />
+      <p class="mt-6 max-w-xs leading-loose">
+        ERP com PDV integrado para pet shops, clínicas veterinárias, auto centers, varejo e prestadores de serviço.
+      </p>
+      <ul class="mt-6 flex items-center gap-3">
+        {
+          sociais.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                data-pendente={isPendente(s.href) ? '' : undefined}
+                aria-label={s.rotulo}
+                class="grid size-12 place-items-center rounded-full transition hover:bg-white hover:text-roxo"
+              >
+                <BrandIcon nome={s.nome} class="size-6" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold">Contatos</h2>
+      <ul class="mt-5 space-y-4">
+        <li><a href={ctas.faleConosco} data-pendente class="hover:text-laranja-300">Fale conosco</a></li>
+        <li><a href={ctas.quemSomos} data-pendente class="hover:text-laranja-300">Quem somos</a></li>
+        <li>
+          <a href={`mailto:${site.contato.email}`} class="hover:text-laranja-300">{site.contato.email}</a>
+        </li>
+        <li class="pt-4">Fone: {site.contato.telefone}</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold">Links</h2>
+      <ul class="mt-5 space-y-4">
+        {
+          menu.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-laranja-300">
+                {item.rotulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold">Inscreva-se na newsletter</h2>
+      <!-- TODO: integração da newsletter pendente; envio simulado no cliente. -->
+      <form class="mt-5 flex flex-col gap-4" data-newsletter novalidate>
+        <label for="newsletter-email" class="sr-only">Email</label>
+        <input
+          id="newsletter-email"
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder="Email"
+          class="h-12 w-full min-w-0 rounded-lg bg-white px-4 text-roxo-logo placeholder:text-texto"
+        />
+        <button type="submit" class="bg-gradiente-laranja h-12 rounded-lg font-bold hover:brightness-110">
+          Enviar
+        </button>
+        <p class="min-h-5 text-sm" role="status" data-newsletter-status></p>
+      </form>
+      <Button href={ctas.whatsapp} variante="whatsapp" tamanho="sm" class="w-full">
+        <BrandIcon nome="whatsapp" class="size-5" />
+        Clique aqui e fale conosco
+      </Button>
+    </div>
+  </div>
+
+  <div class="container-site pb-8 text-center">
+    <p class="text-sm md:text-base">
+      Este site é protegido pelo reCAPTCHA e se aplicam a Política de Privacidade e os Termos de Uso do Google.
+    </p>
+    <ul class="mt-2 flex flex-wrap justify-center gap-x-3 text-xs font-semibold">
+      {
+        linksLegais.map((l) => (
+          <li>
+            <a href={l.href} data-pendente class="inline-block py-1 hover:text-laranja-300">
+              {l.rotulo}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="bg-roxo py-5 text-center text-sm md:text-base">
+    © {new Date().getFullYear()} DiProSoft — Todos os direitos reservados
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-newsletter-status]');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = form.querySelector<HTMLInputElement>('input[type="email"]');
+      if (!email?.checkValidity()) {
+        if (status) status.textContent = 'Informe um email válido.';
+        email?.focus();
+        return;
+      }
+      // Integração pendente: apenas confirma no cliente.
+      if (status) status.textContent = 'Obrigado! Em breve você receberá nossas novidades.';
+      form.reset();
+    });
+  });
+</script>

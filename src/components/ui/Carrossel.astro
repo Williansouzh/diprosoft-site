@@ -1,0 +1,71 @@
+---
+import { ChevronLeft, ChevronRight } from '@lucide/astro';
+
+interface Props {
+  rotulo: string;
+  /** Cor das setas: combina com o fundo da seção. */
+  corSetas?: string;
+}
+
+const { rotulo, corSetas = 'text-roxo' } = Astro.props;
+---
+
+<div class="relative" data-carrossel role="region" aria-roledescription="carrossel" aria-label={rotulo}>
+  <button
+    type="button"
+    class:list={[
+      'absolute top-1/2 -left-2 z-10 hidden -translate-y-1/2 p-2 transition disabled:opacity-25 md:block 2xl:-left-14',
+      corSetas,
+    ]}
+    aria-label="Anterior"
+    data-carrossel-anterior
+  >
+    <ChevronLeft class="size-10" stroke-width={1.25} aria-hidden="true" />
+  </button>
+  <ul
+    class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4 [scrollbar-width:none] md:mx-8 md:gap-6 2xl:mx-0 [&::-webkit-scrollbar]:hidden"
+    data-carrossel-trilho
+  >
+    <slot />
+  </ul>
+  <button
+    type="button"
+    class:list={[
+      'absolute top-1/2 -right-2 z-10 hidden -translate-y-1/2 p-2 transition disabled:opacity-25 md:block 2xl:-right-14',
+      corSetas,
+    ]}
+    aria-label="Próximo"
+    data-carrossel-proximo
+  >
+    <ChevronRight class="size-10" stroke-width={1.25} aria-hidden="true" />
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carrossel]').forEach((carrossel) => {
+    const trilho = carrossel.querySelector<HTMLElement>('[data-carrossel-trilho]');
+    const anterior = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-anterior]');
+    const proximo = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-proximo]');
+    if (!trilho || !anterior || !proximo) return;
+
+    const atualizar = () => {
+      const max = trilho.scrollWidth - trilho.clientWidth;
+      anterior.disabled = trilho.scrollLeft <= 1;
+      proximo.disabled = trilho.scrollLeft >= max - 1;
+      const semRolagem = max <= 1;
+      anterior.hidden = semRolagem;
+      proximo.hidden = semRolagem;
+    };
+    const passo = () => {
+      const item = trilho.querySelector<HTMLElement>(':scope > li');
+      const gap = parseFloat(getComputedStyle(trilho).columnGap) || 0;
+      return item ? item.offsetWidth + gap : trilho.clientWidth;
+    };
+
+    anterior.addEventListener('click', () => trilho.scrollBy({ left: -passo() }));
+    proximo.addEventListener('click', () => trilho.scrollBy({ left: passo() }));
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    new ResizeObserver(atualizar).observe(trilho);
+    atualizar();
+  });
+</script>

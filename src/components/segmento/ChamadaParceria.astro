@@ -1,0 +1,24 @@
+---
+import Button from '../ui/Button.astro';
+import { ctas } from '../../config/site';
+
+interface Props {
+  titulo: string;
+}
+
+const { titulo } = Astro.props;
+---
+
+<section class="bg-cinza-100 py-16 text-center xl:py-20">
+  <div class="container-site">
+    <h2 class="mx-auto max-w-5xl text-3xl leading-tight font-bold text-balance text-roxo md:text-4xl xl:text-[3.5rem]">
+      {titulo}
+    </h2>
+    <p class="mx-auto mt-5 max-w-2xl text-lg md:text-xl xl:text-2xl">
+      Fale com nossos especialistas e descubra como podemos ajudar seu negócio a crescer.
+    </p>
+    <Button href={ctas.parceria} class="mt-8 w-full max-w-xl md:text-lg xl:text-2xl">
+      Saiba mais sobre a parceria
+    </Button>
+  </div>
+</section>

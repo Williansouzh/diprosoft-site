@@ -1,0 +1,22 @@
+---
+import { siFacebook, siInstagram, siWhatsapp, siX, siYoutube } from 'simple-icons';
+
+const icones = {
+  whatsapp: siWhatsapp,
+  facebook: siFacebook,
+  instagram: siInstagram,
+  x: siX,
+  youtube: siYoutube,
+};
+
+interface Props {
+  nome: keyof typeof icones;
+  class?: string;
+}
+
+const { nome, class: className } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d={icones[nome].path} />
+</svg>

@@ -19,7 +19,7 @@ import { ctas } from '../../config/site';
         A Diprosoft One oferece soluções completas em tecnologia, gestão e automação comercial, desenvolvidas para
         simplificar processos, aumentar a produtividade e gerar resultados reais para sua empresa.
       </p>
-      <p class="mt-6 text-2xl leading-snug font-bold text-laranja-500 xl:text-[2.25rem]">
+      <p class="mt-6 text-2xl leading-snug font-bold text-laranja-titulo xl:text-[2.25rem]">
         Mais controle, mais eficiência e mais lucro com um sistema inteligente e integrado.
       </p>
       <p class="mt-6 text-base leading-relaxed md:text-lg xl:text-xl">
@@ -29,11 +29,11 @@ import { ctas } from '../../config/site';
       </p>
       <div class="mt-8 flex flex-wrap gap-4">
         <Button href={ctas.solicitarDemonstracao}>
-          <Image src={iconeFoguete} alt="" width={28} class="h-7 w-auto" />
+          <Image src={iconeFoguete} alt="" width={28} densities={[1, 2, 3]} class="h-7 w-auto" />
           Solicitar Demonstração
         </Button>
         <Button href={ctas.falarComConsultor} variante="roxo">
-          <Image src={iconeChat} alt="" width={28} class="h-6 w-auto" />
+          <Image src={iconeChat} alt="" width={28} densities={[1, 2, 3]} class="h-6 w-auto" />
           Falar com Consultor
         </Button>
       </div>

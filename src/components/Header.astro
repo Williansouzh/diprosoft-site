@@ -1,5 +1,5 @@
 ---
-import { ChevronDown, Menu, Search, X } from '@lucide/astro';
+import { ChevronDown, Menu, X } from '@lucide/astro';
 import { Image } from 'astro:assets';
 import Logo from './ui/Logo.astro';
 import iconePessoas from '../assets/img/icon-people.png';
@@ -76,15 +76,11 @@ const botaoAcesso =
     </nav>
 
     <div class="flex items-center gap-3 xl:gap-5">
-      <!-- TODO: busca sem página de resultados definida no design. -->
-      <button type="button" class="hidden p-2 hover:text-laranja-300 sm:block" aria-label="Buscar" data-pendente>
-        <Search class="size-7" aria-hidden="true" />
-      </button>
       <a
         href={botaoAcesso.href}
         class="bg-gradiente-laranja hidden items-center gap-2 rounded-md py-2 pr-5 pl-3 font-bold shadow-md hover:brightness-110 sm:flex xl:min-h-14 xl:text-lg"
       >
-        <Image src={iconePessoas} alt="" width={40} class="h-8 w-auto xl:h-10" />
+        <Image src={iconePessoas} alt="" width={40} densities={[1, 2, 3]} class="h-8 w-auto xl:h-10" />
         {botaoAcesso.rotulo}
       </a>
       <button

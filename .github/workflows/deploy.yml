@@ -26,9 +26,13 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run build
+        # Variáveis do repositório (Settings → Secrets and variables → Actions → Variables):
+        # SITE_URL e BASE_PATH para domínio próprio; PUBLIC_GA_ID e PUBLIC_RECAPTCHA_SITE_KEY opcionais.
         env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io
-          BASE_PATH: /${{ github.event.repository.name }}
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+          BASE_PATH: ${{ vars.BASE_PATH || format('/{0}', github.event.repository.name) }}
+          PUBLIC_GA_ID: ${{ vars.PUBLIC_GA_ID }}
+          PUBLIC_RECAPTCHA_SITE_KEY: ${{ vars.PUBLIC_RECAPTCHA_SITE_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

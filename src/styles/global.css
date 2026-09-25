@@ -19,11 +19,18 @@
   --color-laranja-500: #ed7629;
   --color-laranja-600: #e84d30;
 
+  /* Variações do laranja para fundos claros, com contraste WCAG AA
+     (o #ed7629 da marca fica em 2,4:1 sobre o cinza). */
+  --color-laranja-texto: #b0490f; /* texto pequeno: 4,5:1 */
+  --color-laranja-titulo: #c9561a; /* títulos grandes: 3,9:1 */
+  --color-laranja-icone: #d9621a; /* ícones e bordas: 3:1 */
+
   --color-cinza-100: #f2f2f3;
   --color-cinza-200: #e9e9ea;
   --color-texto: #626260;
 
-  --color-whatsapp: #71b52b;
+  /* Verde escurecido (design: #71b52b) para o texto branco atingir 4,8:1. */
+  --color-whatsapp: #4a7f1a;
 
   --container-site: 1720px;
 }

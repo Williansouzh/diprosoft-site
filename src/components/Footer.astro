@@ -2,7 +2,7 @@
 import BrandIcon from './ui/BrandIcon.astro';
 import Button from './ui/Button.astro';
 import Logo from './ui/Logo.astro';
-import { ctas, isPendente, linksLegais, menu, site } from '../config/site';
+import { ctas, integracoes, isPendente, linksLegais, menu, site } from '../config/site';
 
 const sociais = [
   { nome: 'facebook', rotulo: 'Facebook', href: site.sociais.facebook },
@@ -91,18 +91,30 @@ const sociais = [
   </div>
 
   <div class="container-site pb-8 text-center">
-    <p class="text-sm md:text-base">
-      Este site é protegido pelo reCAPTCHA e se aplicam a Política de Privacidade e os Termos de Uso do Google.
-    </p>
+    {
+      integracoes.recaptchaSiteKey && (
+        <p class="text-sm md:text-base">
+          Este site é protegido pelo reCAPTCHA e se aplicam a Política de Privacidade e os Termos de Uso do Google.
+        </p>
+      )
+    }
     <ul class="mt-2 flex flex-wrap justify-center gap-x-3 text-xs font-semibold">
       {
-        linksLegais.map((l) => (
-          <li>
-            <a href={l.href} data-pendente class="inline-block py-1 hover:text-laranja-300">
-              {l.rotulo}
-            </a>
-          </li>
-        ))
+        linksLegais.map((l) =>
+          l.rotulo === 'Acessar Cookies' && integracoes.googleAnalyticsId ? (
+            <li>
+              <button type="button" data-abrir-cookies class="inline-block py-1 hover:text-laranja-300">
+                {l.rotulo}
+              </button>
+            </li>
+          ) : (
+            <li>
+              <a href={l.href} data-pendente class="inline-block py-1 hover:text-laranja-300">
+                {l.rotulo}
+              </a>
+            </li>
+          ),
+        )
       }
     </ul>
   </div>

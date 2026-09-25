@@ -1,0 +1,93 @@
+---
+import { integracoes } from '../config/site';
+
+const gaId = integracoes.googleAnalyticsId;
+---
+
+{
+  gaId && (
+    <div
+      role="dialog"
+      aria-live="polite"
+      aria-label="Preferências de cookies"
+      class="fixed inset-x-4 bottom-4 z-50 mx-auto hidden max-w-3xl flex-col gap-4 rounded-xl bg-white p-5 text-sm text-roxo-logo shadow-2xl ring-1 ring-black/10 sm:flex-row sm:items-center md:text-base"
+      data-cookies
+      data-ga-id={gaId}
+    >
+      <p class="flex-1">
+        Usamos cookies de análise (Google Analytics) para entender como o site é usado. Você pode aceitar ou recusar a
+        qualquer momento em “Acessar Cookies”, no rodapé.
+      </p>
+      <div class="flex shrink-0 gap-3">
+        <button type="button" class="rounded-md border border-roxo px-4 py-2 font-semibold text-roxo hover:bg-cinza-100" data-cookies-recusar>
+          Recusar
+        </button>
+        <button type="button" class="rounded-md bg-roxo px-4 py-2 font-semibold text-white hover:bg-roxo-medio" data-cookies-aceitar>
+          Aceitar
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const CHAVE = 'diprosoft-consentimento-cookies';
+  const banner = document.querySelector<HTMLElement>('[data-cookies]');
+
+  const ler = () => {
+    try {
+      return localStorage.getItem(CHAVE);
+    } catch {
+      return null;
+    }
+  };
+  const gravar = (valor: 'aceito' | 'recusado') => {
+    try {
+      localStorage.setItem(CHAVE, valor);
+    } catch {
+      // Sem armazenamento (modo privado): a escolha vale só para esta página.
+    }
+  };
+
+  let analyticsCarregado = false;
+  const carregarAnalytics = (id: string) => {
+    if (analyticsCarregado) return;
+    analyticsCarregado = true;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+    document.head.append(script);
+    const w = window as unknown as { dataLayer: unknown[]; gtag: (...args: unknown[]) => void };
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = function gtag() {
+      // gtag.js espera o objeto `arguments`.
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer.push(arguments);
+    };
+    w.gtag('js', new Date());
+    w.gtag('config', id);
+  };
+
+  if (banner) {
+    const id = banner.dataset.gaId ?? '';
+    const mostrar = (visivel: boolean) => banner.classList.toggle('hidden', !visivel);
+    const decisao = ler();
+
+    if (decisao === 'aceito') carregarAnalytics(id);
+    else if (decisao === null) mostrar(true);
+
+    banner.querySelector('[data-cookies-aceitar]')?.addEventListener('click', () => {
+      gravar('aceito');
+      carregarAnalytics(id);
+      mostrar(false);
+    });
+    banner.querySelector('[data-cookies-recusar]')?.addEventListener('click', () => {
+      gravar('recusado');
+      mostrar(false);
+      // Se o Analytics já estava ativo, a recusa passa a valer na próxima página.
+    });
+    document.querySelectorAll('[data-abrir-cookies]').forEach((botao) =>
+      botao.addEventListener('click', () => mostrar(true)),
+    );
+  }
+</script>

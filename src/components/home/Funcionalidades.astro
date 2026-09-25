@@ -72,7 +72,7 @@ const modulos = [
 
 <section id="funcionalidades" class="bg-cinza-200 py-16 xl:py-20">
   <div class="container-site">
-    <p class="text-sm font-semibold tracking-wide text-laranja-500 uppercase xl:text-base">Funcionalidades</p>
+    <p class="text-sm font-semibold tracking-wide text-laranja-texto uppercase xl:text-base">Funcionalidades</p>
     <h2 class="mt-2 text-3xl leading-tight font-black text-roxo md:text-4xl xl:text-[3.5rem]">
       Tudo o que você precisa em um só sistema
     </h2>
@@ -134,7 +134,7 @@ const modulos = [
             }
           </ul>
           <Button href={ctas.falarComEspecialista} class="mt-5 uppercase xl:mt-auto">
-            <Image src={iconeChat} alt="" width={28} class="h-6 w-auto" />
+            <Image src={iconeChat} alt="" width={28} densities={[1, 2, 3]} class="h-6 w-auto" />
             Falar com especialista
           </Button>
         </div>
@@ -144,12 +144,12 @@ const modulos = [
     <div
       class="bg-gradiente-laranja relative mt-10 flex flex-col items-center gap-6 rounded-3xl px-6 py-10 text-center text-white md:flex-row md:px-10 md:text-left xl:mt-12 xl:px-16 xl:py-12"
     >
-      <Image src={iconeFoguete} alt="" width={140} class="h-28 w-auto md:h-36 xl:ml-8 xl:h-44" />
+      <Image src={iconeFoguete} alt="" width={140} densities={[1, 2, 3]} class="h-28 w-auto md:h-36 xl:ml-8 xl:h-44" />
       <h2 class="flex-1 text-3xl leading-tight font-bold md:text-4xl xl:pl-16 xl:text-[3.5rem]">
         Pronto para transformar a gestão do seu negócio?
       </h2>
       <Button href={ctas.solicitarDemonstracao} variante="roxo" tamanho="lg" class="shrink-0 md:text-lg xl:text-xl">
-        <Image src={iconeFoguete} alt="" width={28} class="h-8 w-auto" />
+        <Image src={iconeFoguete} alt="" width={28} densities={[1, 2, 3]} class="h-8 w-auto" />
         Solicitar Demonstração
       </Button>
     </div>

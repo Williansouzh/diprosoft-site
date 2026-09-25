@@ -11,6 +11,18 @@ export const PENDENTE = '#';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 export const url = (caminho: string) => `${BASE}${caminho}`;
 
+/**
+ * Integrações opcionais, ativadas por variável de ambiente no build
+ * (localmente em `.env`; no GitHub Pages em Settings → Secrets and variables → Actions → Variables).
+ * Sem a variável, nada é carregado nem exibido.
+ */
+export const integracoes = {
+  /** ID do Google Analytics 4 (G-XXXXXXX). Só carrega depois do consentimento de cookies. */
+  googleAnalyticsId: import.meta.env.PUBLIC_GA_ID as string | undefined,
+  /** Chave do site do reCAPTCHA v3. Ativa o aviso do rodapé (validação no servidor pendente). */
+  recaptchaSiteKey: import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY as string | undefined,
+};
+
 export const site = {
   nome: 'Diprosoft One',
   descricao:

@@ -51,7 +51,7 @@ const duasColunas = pagina.itens.length > 4;
       <div class="lg:pl-[12%]">
         <p class="mt-6 max-w-xl text-base leading-relaxed md:text-lg xl:text-xl">{pagina.produtoTexto}</p>
         <Button href={ctas.testarSistema} class="mt-10 md:text-lg xl:text-xl">
-          <Image src={iconeTestar} alt="" width={40} class="h-9 w-auto" />
+          <Image src={iconeTestar} alt="" width={40} densities={[1, 2, 3]} class="h-9 w-auto" />
           {pagina.ctaTestar}
         </Button>
       </div>

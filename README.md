@@ -45,7 +45,6 @@ Segmentos sem `pagina` aparecem na Home com o selo "Em breve", a menos que tenha
   (`src/config/site.ts`). Liste-os com `grep -rn data-pendente dist/` após o build.
 - **Login**: `LoginMock.astro` apenas valida os campos e exibe uma mensagem. Trocar pelo envio/redirecionamento real.
 - **Newsletter**: envio simulado no `Footer.astro`.
-- **Busca**: o ícone do header não tem funcionalidade (o design não define a página de resultados).
 - **Textos**: descrições baseadas nos recursos do ERP (`new-erp-diprosoft`); não citar recursos que o sistema não tem.
   Ainda provisórios: os 4 cases (lorem ipsum) e o telefone `(123) 456-7890`.
 - **Mockups de celular** nas páginas de segmento: imagem provisória repetida do design.
@@ -54,4 +53,30 @@ Segmentos sem `pagina` aparecem na Home com o selo "Em breve", a menos que tenha
 - **Hortifrúti**: o design tem o card, mas não a página. Como a página de Varejo do design é ilustrada com um
   hortifrúti, o card leva para `/segmentos/varejo`.
 - **Ícones**: os ícones de linha do design não foram exportados separadamente; foram usados ícones Lucide equivalentes.
-- **Contraste (acessibilidade)**: laranja `#ed7629` sobre cinza claro e branco sobre o verde `#71b52b` ficam abaixo de 4.5:1 — decisão de design a revisar.
+- **Contraste (acessibilidade)**: sobre fundos claros o laranja usa tons mais escuros (`laranja-texto`, `laranja-titulo`,
+  `laranja-icone`) e o botão de WhatsApp usa verde `#4a7f1a` em vez do `#71b52b` do design, para passar no WCAG AA.
+  Para voltar às cores do design, altere os tokens em `src/styles/global.css`.
+
+## Publicação (GitHub Pages)
+
+Cada push na `main` publica em https://williansouzh.github.io/diprosoft-site/ (`.github/workflows/deploy.yml`).
+
+### Variáveis opcionais
+
+Cadastre em *Settings → Secrets and variables → Actions → Variables* (ou em `.env` localmente; veja `.env.example`):
+
+| Variável | Efeito |
+|---|---|
+| `PUBLIC_GA_ID` | Ativa o Google Analytics 4 e o banner de consentimento de cookies. O script só carrega depois de "Aceitar"; "Acessar Cookies" no rodapé reabre o banner. |
+| `PUBLIC_RECAPTCHA_SITE_KEY` | Exibe o aviso de reCAPTCHA no rodapé. A validação do token precisa ser feita no servidor que receber os formulários. |
+| `SITE_URL` / `BASE_PATH` | Domínio próprio (ver abaixo). |
+
+### Domínio próprio (ex.: www.diprosoft.com.br)
+
+1. No DNS do domínio, crie um `CNAME` de `www` apontando para `williansouzh.github.io`.
+2. Em *Settings → Pages → Custom domain*, informe `www.diprosoft.com.br` e marque *Enforce HTTPS* quando liberar.
+3. Crie as variáveis `SITE_URL=https://www.diprosoft.com.br` e `BASE_PATH=/` e rode o workflow de novo.
+
+O `robots.txt` e o `sitemap-index.xml` são gerados automaticamente; os buscadores só leem o `robots.txt`
+na raiz do domínio, então ele passa a valer de fato com o domínio próprio.
+
